@@ -1,0 +1,208 @@
+﻿@page "/learnBlazorRouting/opRazorComp_Prop"
+
+<h3>OutputRazorComponent</h3>
+<br />
+
+<h2 class="text-success">Individual Product</h2>
+
+<div class="row">
+
+	<div class="col-6 border border-secondary p-3">
+		<h4 class="text-primary">Product Management:</h4>
+		<hr />
+		<div>
+			Update Price: <input type="number" @bind-value="@product.Price" />
+			<!-- @@bind- is prefixed to create a 2 way data binding -->
+		</div>
+
+		<div class="row border border-secondary" style="margin-top: 10px">
+			<h5 style="margin-top: 15px; text-decoration: underline">Assignment-1</h5>
+			<div>
+				This Procuct Is <b> @(product.IsActive ? "Active" : "Inactive") </b>
+			</div>
+
+			<br />
+
+			<div style="margin: 15px 0 10px 0">
+				<label for="active"> Update IsActive: </label>
+				<input type="checkbox" @bind-value="product.IsActive" name="active"
+					   checked="@(product.IsActive ? "checked" : null)" />
+			</div>
+		</div>
+
+		<div style="margin-top: 15px">
+			Color: <select @bind-Value="color" @bind-Value:event="oninput">
+				@foreach (var col in product.Color)
+				{
+					<option value="@col">@col</option>
+				}
+			</select>
+		</div>
+
+		<div>
+			<span @onclick="Setup" style="cursor:pointer;">
+				<span class="text-primary" style="text-decoration: underline; font-weight: bold">
+					Product properties:
+					<button class="btn btn-info" style="margin-left: 10px;">
+						@(
+							collapse ? "↑" : "↓"
+							)
+					</button>
+				</span>
+			</span>
+			<ul hidden="@collapse">
+				@foreach (var prop in product.ProductProps)
+				{
+					<li>@prop.Key : @prop.Value</li>
+				}
+
+				<li> Selected Color : @(String.IsNullOrEmpty(color) ? @product.Color.First() : @color)</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="col-6 border border-secondary p-3">
+		<h4 class="text-primary">Product Summary:</h4>
+		<hr />
+		@*Id: @product.Id
+		<br />*@
+		Name: @product.Name
+		<br />
+		IsActive: @product.IsActive
+		<br />
+		Price: @product.Price
+		<br />
+		Selected Color : @(String.IsNullOrEmpty(color) ? @product.Color.First() : @color)
+
+	</div>
+</div>
+
+<div class="row border border-secondary p-3" style="margin-top: 15px">
+	<h5 style="text-decoration: underline">Assignment-2</h5>
+
+	<h2 class="text-success">Product Management</h2>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Name</th>
+				<th scope="col">Price</th>
+				<th scope="col">IsActive</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var p in Products)
+			{
+				<tr>
+					<td> <input @bind-value="@p.Name" @bind-value:event="oninput"/> </td>
+					<td> <input type="number" @bind-value="@p.Price" /> </td>
+					<td> <input type="checkbox" @bind-value="@p.IsActive"
+						   checked="@(p.IsActive ? "checked" : null)" />
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+	<h2 class="text-success" style="margin-top: 20px">Product List</h2>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col" class="col-5">Name</th>
+				<th scope="col" class="col-5">Price</th>
+				<th scope="col" class="col-2">IsActive</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var p in Products)
+			{
+				<tr>
+					<td> @p.Name </td>
+					<td> @p.Price </td>
+					<td> @p.IsActive </td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+@code {
+	private bool collapse = true;
+	private string color = "";
+
+	private void Setup()
+	{
+		collapse = !collapse;
+	}
+
+	ClassFile_Demo_Product_Model product = new()
+		{
+			Id = 14,
+			Name = "Name field, Id's commented for frontend",
+			IsActive = true,
+			Price = 10.99,
+
+			Color = new List<string>()
+			{
+				"White",
+				"Black",
+				"Blue"
+			},
+
+			ProductProps = new List<ClassFile_Demo_ProductProp_Model>()
+			{
+				new ClassFile_Demo_ProductProp_Model { Id = 1, Key = "Brand", Value = "GHM" },
+				new ClassFile_Demo_ProductProp_Model { Id = 2, Key = "Size", Value = "5.6\"" },
+				new ClassFile_Demo_ProductProp_Model { Id = 3, Key = "Weight", Value = "20 oz" }
+			}
+		};
+
+	List<ClassFile_Demo_Product_Model> Products = new();
+
+	protected override void OnInitialized()
+	{
+		Products.Add(new()
+			{
+				Id = 1,
+				Name = "Midnight Blaze",
+				IsActive = false,
+				Price = 14.99,
+
+				Color = new List<string>()
+				{
+					"Violet",
+					"Green",
+					"Blue"
+				},
+
+				ProductProps = new()
+				{
+					new ClassFile_Demo_ProductProp_Model { Id = 1, Key = "Brand", Value = "GH" },
+					new ClassFile_Demo_ProductProp_Model { Id = 2, Key = "Size", Value = "5.5\"" },
+					new ClassFile_Demo_ProductProp_Model { Id = 3, Key = "Weight", Value="20 oz" }
+				}
+			});
+
+		Products.Add(new()
+			{
+				Id = 2,
+				Name = "Blossom Lily",
+				IsActive = true,
+				Price = 7.99,
+
+				Color = new List<string>()
+				{
+					"Grey",
+					"Silver",
+					"Pink"
+				},
+
+				ProductProps = new()
+				{
+					new ClassFile_Demo_ProductProp_Model { Id = 1, Key = "Brand", Value = "G" },
+					new ClassFile_Demo_ProductProp_Model { Id = 2, Key = "Size", Value = "5.7\"" },
+					new ClassFile_Demo_ProductProp_Model {Id = 3,Key = "Weight",Value = "18 oz" }
+				}
+			});
+	}
+
+}

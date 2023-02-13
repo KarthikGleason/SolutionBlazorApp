@@ -1,0 +1,60 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">ProjectBlazorApp_Server</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="fetchdata">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/learnBlazorRouting/1stRazorComp_Prop" style="line-height: 110%">
+                <span class="oi oi-list-rich" aria-hidden="true"></span>
+                Learn Blazor Routing<br> -> 1st Razor Component - Property
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/learnBlazorRouting/opRazorComp_Prop" style="line-height: 110%">
+                <span class="oi oi-list-rich" aria-hidden="true"></span>
+                Output
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/somethingElse-learnBlazorRouting/assignment-3" style="line-height: 110%">
+                <!-- the route path for href is independent for the folder structure and the file name -->
+                <span class="oi oi-list-rich" aria-hidden="true"></span>
+                Assignemnt - 3
+            </NavLink>
+        </div>
+
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

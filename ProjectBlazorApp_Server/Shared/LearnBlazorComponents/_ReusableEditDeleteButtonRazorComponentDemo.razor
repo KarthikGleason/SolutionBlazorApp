@@ -1,0 +1,16 @@
+﻿@* Since this component will be consumed in other components, this will not require @page directive 
+	This also doesn't allow its access directly from the website via a routable path 
+	
+	Such component's name start with an '_' by convention, to differentiate them from routable components *@
+
+@if (IsActive)
+{
+	<button type="button" class="btn btn-success">Edit</button>
+	<button type="button" class="btn btn-danger">Delete</button>
+}
+
+
+@code {
+	[Parameter]
+	public bool IsActive { get; set; }
+}

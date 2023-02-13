@@ -1,0 +1,13 @@
+﻿@Product.Name
+<br />
+@Product.Price
+<br />
+@(Product.IsActive ? "Available" : "Out of Stock")
+<input type="checkbox" @bind-value="Product.IsActive"
+	   checked="@(Product.IsActive ? "checked" : null)" />
+<br />
+
+@code {
+	[Parameter]
+	public ClassFile_Demo_Product_Model Product { get; set; }
+}

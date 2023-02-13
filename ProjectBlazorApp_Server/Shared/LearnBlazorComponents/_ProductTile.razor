@@ -1,0 +1,38 @@
+﻿<span style="position: absolute; top: 10px; right: 10px;">
+	Favourite <input type="checkbox" @onchange="UpdateFavourite"/>
+</span>
+@p.Name
+<br />
+@p.Price
+<br />
+@(p.IsActive ? "Available" : "Out of Stock")
+<input type="checkbox" @bind-value="p.IsActive"
+	   checked="@(p.IsActive ? "checked" : null)" />
+<br />
+<br />
+
+@if (p.IsActive)
+{
+	<span style="font-size: 18px"> Product properties: </span>
+	<_ProductPropertiesComponent Product="@p">
+	</_ProductPropertiesComponent>
+}
+
+<div style="position: absolute; right: 10px; bottom: 10px">
+
+	@* Here we are accessing the Edit and Delete buttons via a shared component
+	This feature allows the code to be broken down to multiple components
+	*@
+	<_ReusableEditDeleteButtonRazorComponentDemo IsActive="@p.IsActive">
+	</_ReusableEditDeleteButtonRazorComponentDemo>
+</div>
+
+@code {
+	[Parameter]
+	public ClassFile_Demo_Product_Model p { get; set; }
+
+	private async Task UpdateFavourite(ChangeEventArgs e)
+	{
+		
+	}
+}

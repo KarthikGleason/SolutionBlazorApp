@@ -1,0 +1,20 @@
+﻿<ul>
+	@foreach (var prop in Product.ProductProps)
+	{
+		<li>@prop.Key : @prop.Value</li>
+	}
+	<li>
+		Available Colors :
+		<ul>
+			@foreach (string c in Product.Color)
+			{
+				<li> @c </li>
+			}
+		</ul>
+	</li>
+</ul>
+
+@code {
+	[Parameter]
+	public ClassFile_Demo_Product_Model Product { get; set; }
+}

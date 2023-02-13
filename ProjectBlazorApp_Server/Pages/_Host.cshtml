@@ -1,0 +1,17 @@
+﻿@page "/"
+@* makes it an active page => it handles the requests without going throught the controller, provides the route value *@
+@* here, @page "/" => root pan of the app -> points to index.razor (default page of the app) *@
+
+@namespace ProjectBlazorApp_Server.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";     @* '_Layout' => default master / template page *@
+}
+
+@* <component> -> to render a component from a page / view *@
+<component type="typeof(App)" render-mode="ServerPrerendered" />    @* ServerPrerendered -> since we are using the
+                                                                        Blazor Server *@
+                    @* 'App' is the App.razor under the Project folder *@
+                    @* Look into App.razor file*@
+                                        @* => that App build is built on Server which is passed on to Browser *@
+@* this is the final component where where all rendering of all pages in the App will happen *@

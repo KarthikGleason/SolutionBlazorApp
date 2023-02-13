@@ -1,0 +1,222 @@
+﻿@page "/somethingElse-learnBlazorRouting/assignment-3"
+
+@* the route path for @page directive is independent of the folder structure and file names *@
+
+<h3>A_3RazorComponent</h3>
+<br />
+
+<div class="border border-secondary p-3">
+	<h5 style="text-decoration:underline;">Assignment - 3</h5>
+	<h2 class="text-primary">CRUD - C over Products
+		<span class="text-black" style="font-size: 16px;"> [Favourites Total: @SelectedFavCnt] </span></h2>
+
+	<div class="row border border-secondary p-1" style="background-color: azure">
+		<div class="border m-1 bg-light pt-1" style="height: 325px; width: 32.5%">
+			<b>Product Name:</b>
+			<br />
+			<b>Price:</b>
+			<br />
+			<b>IsActive:</b>
+		</div>
+
+		@foreach(var p in Products)
+		{
+			<div class="border m-1 bg-light pt-1" style="height: 325px; position: relative; width: 32.5%">
+				<_ProductTile p="@p">
+				</_ProductTile>
+
+			</div>
+		}
+	</div>
+
+	<table class="table table-striped" style="margin-top: 30px">
+		<thead>
+			<tr>
+				<th scope="col" class="col-4">Name</th>
+				<th scope="col" class="col-4">Price</th>
+				<th scope="col" class="col-2">IsActive</th>
+				<th scope="col" class="col-2"></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var p in Products)
+			{
+				<tr>
+					<td> @p.Name <br />
+						<br />
+						@if (p.IsActive)
+						{
+							<span style="font-size: 18px"> Product properties: </span>
+
+							<_ProductPropertiesComponent Product="@p">
+							</_ProductPropertiesComponent>
+						}
+					</td>
+					<td> @p.Price </td>
+					<td> @p.IsActive 
+						<input type="checkbox" @bind-value="p.IsActive"
+							checked="@(p.IsActive ? "checked" : null)" />
+					</td>
+					<td>
+
+						@* Here we are accessing the Edit and Delete buttons via a shared component
+							This feature allows the code to be broken down to multiple components
+						*@
+						<_ReusableEditDeleteButtonRazorComponentDemo IsActive="@p.IsActive">
+						</_ReusableEditDeleteButtonRazorComponentDemo>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+
+@code {
+	List<ClassFile_Demo_Product_Model> Products = new();
+
+	private int SelectedFavCnt { get; set; } = 0;
+
+	protected void SelectedFavCntUpdate(bool isSelected)
+	{
+		if (isSelected)
+			SelectedFavCnt++;
+		else
+			SelectedFavCnt--;
+	}
+
+	protected override void OnInitialized()
+	{
+		Products.Add(new()
+			{
+				Id = 1,
+				Name = "Midnight Blaze",
+				IsActive = false,
+				Price = 14.99,
+
+				Color = new List<string>()
+				{
+					"Violet",
+					"Green",
+					"Blue"
+				},
+
+				ProductProps = new()
+				{
+					new ClassFile_Demo_ProductProp_Model { Id = 1, Key = "Brand", Value = "GH" },
+					new ClassFile_Demo_ProductProp_Model { Id = 2, Key = "Size", Value = "5.5\"" },
+					new ClassFile_Demo_ProductProp_Model { Id = 3, Key = "Weight", Value="20 oz" }
+				}
+			});
+
+		Products.Add(new()
+			{
+				Id = 2,
+				Name = "Blossom Lily",
+				IsActive = true,
+				Price = 7.99,
+
+				Color = new List<string>()
+				{
+					"Grey",
+					"Silver",
+					"Pink"
+				},
+
+				ProductProps = new()
+				{
+					new ClassFile_Demo_ProductProp_Model { Id = 1, Key = "Brand", Value = "G" },
+					new ClassFile_Demo_ProductProp_Model { Id = 2, Key = "Size", Value = "5.7\"" },
+					new ClassFile_Demo_ProductProp_Model {Id = 3,Key = "Weight",Value = "18 oz" }
+				}
+			});
+
+		Products.Add(new()
+			{
+				Id = 3,
+				Name = "Midnight Blaze",
+				IsActive = false,
+				Price = 14.99,
+
+				Color = new List<string>()
+				{
+					"Violet",
+					"Green",
+					"Blue"
+				},
+
+				ProductProps = new()
+				{
+					new ClassFile_Demo_ProductProp_Model { Id = 1, Key = "Brand", Value = "GH" },
+					new ClassFile_Demo_ProductProp_Model { Id = 2, Key = "Size", Value = "5.5\"" },
+					new ClassFile_Demo_ProductProp_Model { Id = 3, Key = "Weight", Value="20 oz" }
+				}
+			});
+
+		Products.Add(new()
+			{
+				Id = 4,
+				Name = "Blossom Lily",
+				IsActive = true,
+				Price = 7.99,
+
+				Color = new List<string>()
+				{
+					"Grey",
+					"Silver",
+					"Pink"
+				},
+
+				ProductProps = new()
+				{
+					new ClassFile_Demo_ProductProp_Model { Id = 1, Key = "Brand", Value = "G" },
+					new ClassFile_Demo_ProductProp_Model { Id = 2, Key = "Size", Value = "5.7\"" },
+					new ClassFile_Demo_ProductProp_Model {Id = 3,Key = "Weight",Value = "18 oz" }
+				}
+			});
+
+		Products.Add(new()
+			{
+				Id = 5,
+				Name = "Midnight Blaze",
+				IsActive = false,
+				Price = 14.99,
+
+				Color = new List<string>()
+				{
+					"Violet",
+					"Green",
+					"Blue"
+				},
+
+				ProductProps = new()
+				{
+					new ClassFile_Demo_ProductProp_Model { Id = 1, Key = "Brand", Value = "GH" },
+					new ClassFile_Demo_ProductProp_Model { Id = 2, Key = "Size", Value = "5.5\"" },
+					new ClassFile_Demo_ProductProp_Model { Id = 3, Key = "Weight", Value="20 oz" }
+				}
+			});
+
+		Products.Add(new()
+			{
+				Id = 6,
+				Name = "Blossom Lily",
+				IsActive = true,
+				Price = 7.99,
+
+				Color = new List<string>()
+				{
+					"Grey",
+					"Silver",
+					"Pink"
+				},
+
+				ProductProps = new()
+				{
+					new ClassFile_Demo_ProductProp_Model { Id = 1, Key = "Brand", Value = "G" },
+					new ClassFile_Demo_ProductProp_Model { Id = 2, Key = "Size", Value = "5.7\"" },
+					new ClassFile_Demo_ProductProp_Model {Id = 3,Key = "Weight",Value = "18 oz" }
+				}
+			});
+	}
+}

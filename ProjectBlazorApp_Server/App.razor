@@ -1,0 +1,19 @@
+﻿<Router AppAssembly="@typeof(App).Assembly">    <!-- from wheere the actual routing happens -->
+
+    <Found Context="routeData">         <!-- checks if route as specified in the .cshtml page is found (in Pages folder)-->
+                                        <!-- if not the <NotFound> is the spet ahead -->
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+                                            <!-- DefaultLayout is used if custom one's not provided on the endpoint page -->
+                                            <!-- 'MainLayout' is a razor page -->
+                                            <!-- look into MainLayout.razor under Shared folder -->
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+            <!-- we can provide the custom Error page here, or create a component and call it here in LayoutView -->
+
+        </LayoutView>
+    </NotFound>
+</Router>

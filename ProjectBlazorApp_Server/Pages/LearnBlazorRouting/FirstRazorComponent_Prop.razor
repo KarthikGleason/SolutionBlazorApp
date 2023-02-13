@@ -1,0 +1,166 @@
+﻿<!-- Prop => property -->
+
+@page "/learnBlazorRouting/1stRazorComp_Prop"
+
+@*@using ClassLibraryBlazorApp_Models.LearnBlazorModels*@		@* The imports now added to the global imports file
+																	the _Imports.razor *@
+
+<h3>FirstRazorComponent_Prop</h3>
+
+<br />
+
+<span style="font-weight: bold;">Note</span>: 'Product Summary:' exhibits one way data binding, i.e., its the process of
+rendering the view as per the values<br />
+inside our Model (here, an instance of the 'Model' is created in the '@@code' directive's block, and instantiated).
+
+<br />
+<br />
+
+<div class="row border p-3">
+	<h4 class="text-primary">Product Summary:</h4>
+	<hr />
+	@*Id: @product.Id
+	<br />*@
+	Name: @product.Name
+	<br />
+	IsActive: @product.IsActive
+	<br />
+	Price: @product.Price
+	<br />
+	Selected Color : @(String.IsNullOrEmpty(color) ? @product.Color.First() : @color)
+</div>
+
+<div class="row border p-3" style="margin-top: 25px">
+	<h4 class="text-primary">Product Management:</h4>
+	<hr />
+
+	<br />
+	<div>
+		Update Price: <input type="number" @bind-value="@product.Price" />
+		<!-- @@bind- is prefixed to create a 2 way data binding -->
+	</div>
+
+	<br />
+	<br />
+
+	<div>
+		<span style="font-weight: bold;">Note:</span> Changing the price in the input box updates the original price
+			of the model, this is done via 2-way data
+		<br /> binding, achieved by prefixing '@@bind-' to the 'value' attribiute of the 'input' tag.
+		<br /> By default, the event on which 2 way data binding is done is, on the event of change
+	</div>
+
+	<div style="margin-top: 15px">
+		Update price as you type:<input type="number" @bind-value="@product.Price" @bind-value:event="oninput"/>
+
+		@* Uncomment the next line to test the default event which triggers the update *@
+		@*Update price:<input type="number" @bind-value="@product.Price" @bind-value:event="onchange"/>*@
+	</div>
+
+	<div style="margin-top: 15px">
+		<span style="font-weight: bold;">Note:</span> Here, we are changing the event on which the binding is achieved
+		via '@@bind-value:event' attribute,
+		<br /> now its set to 'oninput'.
+		<br /> <b>However, using this method doesn't allow us to update the value to ex: 90.09</b>
+	</div>
+
+	<div style="margin-top: 15px">
+	<span style="font-weight: bold;">Note:</span> input tag supports only the 'onchange'(default) and 'oninput'
+	Blazor events
+
+	@*<br />
+	Update price as you type:<input type="number" @bind="@product.Price" @bind:event="oninput"/>*@
+	@* 2 way data binding also works without mentioning 'value', uncomment above lines to check *@
+	</div>
+
+	<div class="row border">
+	<h5 style="margin-top: 15px; text-decoration: underline">Assignment-1</h5>
+		<div>
+			This Procuct Is <b> @(product.IsActive ? "Active" : "Inactive") </b>
+		</div>
+	
+		<div style="margin-top: 15px">
+			<span style="font-weight: bold;">Note:</span> Observe that the text above states
+			<span style="font-weight: bold;">Active</span> or 
+			<span style="font-weight: bold;">Inactive</span> and NOT <span style="font-weight: bold;">True</span> or
+			<span style="font-weight: bold;">False</span> (controlling the display text,
+			<br /> based on the value of the IsActive field)
+		</div>
+
+		<br />
+		<br />
+
+		<div style="margin: 15px 0 10px 0">
+			<label for="active"> Update IsActive: </label>
+			<input type="checkbox" @bind-value="product.IsActive" name="active" checked="@(product.IsActive ? "checked" : null)"/>
+												@* here '@product' is not required *@
+		</div>
+	</div>
+
+	<br />
+	<br />
+	
+	<div style="margin-top: 15px">
+		Color: <select @bind-Value="color" @bind-Value:event="oninput">
+			@foreach(var col in product.Color)
+			{
+				<option value="@col">@col</option>
+			}
+		</select>
+	</div>
+
+	<br />
+	<br />
+	
+	<div>
+		<span @onclick="Setup" style="cursor:pointer;">
+			<span class="text-primary" style="text-decoration: underline; font-weight: bold">
+				Product properties:
+				<button class="btn btn-info" style="margin-left: 10px;"> @(
+					collapse ? "↑" : "↓"
+					) </button>
+			</span>
+		</span>	
+		<ul hidden="@collapse">
+			@foreach(var prop in product.ProductProps)
+			{
+				<li>@prop.Key : @prop.Value</li>
+			}
+			
+			<li>Selected Color : @(String.IsNullOrEmpty(color) ? @product.Color.First() : @color)</li>
+		</ul>
+	</div>
+</div>
+
+@code {
+	private bool collapse = true;
+	private string color = "";
+
+	private void Setup()
+	{
+		collapse = !collapse;
+		//color = product.Color.First();
+	}
+
+	ClassFile_Demo_Product_Model product = new()
+		{
+			Id = 14,
+			Name = "Name field, Id's commented for frontend",
+			IsActive = true,
+			Price = 10.99,
+
+			Color = new List<string>()
+			{
+				"White",
+				"Black",
+				"Blue"
+			},
+
+			ProductProps = new List<ClassFile_Demo_ProductProp_Model>()
+			{
+				new ClassFile_Demo_ProductProp_Model {Id = 1, Key = "Brand", Value = "GHM"},
+				new ClassFile_Demo_ProductProp_Model {Id = 2, Key = "Size", Value = "5.6\""},
+				new ClassFile_Demo_ProductProp_Model {Id = 3, Key = "Weight", Value = "20 oz"}
+			}
+		};
+}
